@@ -5,16 +5,11 @@ import (
 	"io"
 
 	"github.com/AndreReyesG/blogrenderer/internal/blogposts"
-)
-
-const (
-	postTemplate = `<h1>{{.Title}}</h1>
-<p>{{.Description}}</p>
-Tags: <ul>{{range .Tags}}<li>{{.}}</li>{{end}}</ul>`
+	"github.com/AndreReyesG/blogrenderer/ui"
 )
 
 func Render(w io.Writer, p blogposts.Post) error {
-	templ, err := template.New("blog").Parse(postTemplate)
+	templ, err := template.ParseFS(ui.PostTemplates, "templates/*.html")
 	if err != nil {
 		return err
 	}
